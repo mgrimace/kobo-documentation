@@ -1,10 +1,10 @@
 # Kobo Libra Colour Setup
 
-Opinionated documentation for setting up a Kobo Libra Colour (or any Kobo device) for a native, wireless, self-hosted e-book library (i.e., tap a book on the device and it downloads over WiFi) with Hardcover syncing, plus streaming manga with no conversion needed.
+Opinionated documentation for setting up a Kobo Libra Colour (or any Kobo device) for a native, wireless, self-hosted e-book library (i.e., tap a book on the device and it downloads over WiFi) with Hardcover progress syncing, plus streaming manga with no conversion needed.
 
-My organizational philosophy here is to keep books and manga libraries separate and tidy:
-- The **native Kobo interface** is used for reading books (synced wirelessly from a self-hosted library).
-- **KoReader** is used exclusively as an entry point into a manga library, so the two collections and reading experiences never mix.
+The organizational philosophy here is to keep the book and manga libraries completely separate:
+- The native Kobo interface is used exclusively for reading books. Books are synced wirelessly from a self-hosted library using Calibre-Web's Kobo Sync API, with reading progress synced to Hardcover.app.
+- KoReader is used exclusively as the entry point for the manga library. From the Kobo home screen, NickelMenu provides a quick launch directly into the Rakuyomi manga library, using KoReader, and a few supporting plugins. This keeps the manga collection and reading experience completely separate from the native Kobo book library.
 
 ## Contents
 
@@ -16,11 +16,14 @@ My organizational philosophy here is to keep books and manga libraries separate 
 
 ### Patch Nickel with kobopatch
 
-Use the latest patches from the [MobileRead kobopatch forum](https://www.mobileread.com/forums/forumdisplay.php?f=247).
+Use the latest patches from the [MobileRead Kobo Developper forum](https://www.mobileread.com/forums/forumdisplay.php?f=247).
 
-My [`patches/kobopatch.yaml`](patches/kobopatch.yaml) contains my personal preferences layered on top of the standard patch set, for example:
+My [`patches/kobopatch.yaml`](patches/kobopatch.yaml) contains my personal preferences, for example:
 - Removing the third row (footer) and increasing cover size on the home screen
 - Increasing cover size on the library and series pages
+
+> [!CAUTION]
+> Make sure the version and source (`in:`) match your exact firmware!
 
 Copy/merge the `overrides:` section from [`patches/kobopatch.yaml`](patches/kobopatch.yaml) into your own kobopatch config, run kobopatch, and install the resulting `KoboRoot.tgz` on the device.
 
@@ -28,11 +31,11 @@ Copy/merge the `overrides:` section from [`patches/kobopatch.yaml`](patches/kobo
 
 Install [NickelMenu](https://github.com/pgaskin/NickelMenu) to add custom menu entries (toggles, quick actions, launching KoReader, etc.) to the native Kobo UI.
 
-My config lives in [`nicklemenu/config`](nicklemenu/config) and adds things like dark mode / invert screen quick toggles, manually trigger a USB connection (useful for setup without unplugging cable),and quick access to reading stats, reboot, and shutdown. These options are available from the home screen, reader, library, and browser menus.
+My config lives in [`nicklemenu/config`](nicklemenu/config) and adds a custom icon, and entries like dark mode / invert screen quick toggles, manually trigger a USB connection (useful for setup without unplugging cable),and quick access to reading stats, reboot, and shutdown. These options are available from the home screen, reader, library, and browser menus.
 
 ### Add KoReader
 
-Install [KoReader](https://github.com/koreader/koreader). It's used solely for reading manga through Rakuyomi (see [Section 3](#3-setup-manga)) — not for regular e-books, which stay in the native Kobo library.
+Install [KoReader](https://github.com/koreader/koreader). It's used solely for reading manga through Rakuyomi (see [Section 3](#3-setup-manga)).
 
 ### Optional device tweaks
 
@@ -85,7 +88,7 @@ All manga reading happens inside KoReader via the Rakuyomi plugin, kept fully se
 - Install [stretch.koplugin](https://github.com/mgrimace/stretch.koplugin) so manga pages fill the available screen without extra scrolling.
 - Install [startrakuyomi.koplugin](https://github.com/mgrimace/startrakuyomi.koplugin) so launching KoReader drops you straight into your Rakuyomi library.
 
-### Optional manga plugins
+### Optional Koreader plugins
 
 - [simpleui.koplugin](https://github.com/doctorhetfield-cmd/simpleui.koplugin) — simple menu bar actions similar to tapping the top of the screen in the native Kobo UI (quit back to Nickel, brightness, etc.)
 - [appstore.koplugin](https://github.com/omer-faruq/appstore.koplugin) — easier plugin discovery, installation, and updates
