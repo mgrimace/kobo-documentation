@@ -1,0 +1,45 @@
+#
+# -----------------------------------------------------------------------------
+#
+menu_item : main    : Dark Mode           : nickel_setting : toggle : dark_mode
+menu_item : main    : Invert Screen       : nickel_setting : toggle : invert
+menu_item : main    : Screenshots         : nickel_setting : toggle : screenshots
+menu_item : main    : Import books        : nickel_misc    : rescan_books_full
+menu_item : main    : USB Connect         : nickel_misc    : force_usb_connection
+menu_item : main    : Reading Stats       : nickel_open : reading_life : stats
+menu_item : main    : Reboot              : power          : reboot
+menu_item : main    : Shutdown            : power          : shutdown
+#
+# -----------------------------------------------------------------------------
+#
+menu_item : reader  : Dark Mode           : nickel_setting : toggle : dark_mode
+menu_item : reader  : Invert Screen       : nickel_setting : toggle : invert
+menu_item : reader  : Screenshots         : nickel_setting : toggle : screenshots
+menu_item : reader  : Reading Stats       : nickel_open : reading_life : stats
+#
+# -----------------------------------------------------------------------------
+#
+menu_item : browser : Invert Screen       : nickel_setting : toggle : invert
+#
+# -----------------------------------------------------------------------------
+#
+menu_item : library : Dark Mode           : nickel_setting : toggle :dark_mode
+menu_item : library : Invert Screen       : nickel_setting : toggle :invert
+menu_item : library : Import books        : nickel_misc    : rescan_books_full
+menu_item : library : USB Connect         : nickel_misc    : force_usb_connection
+menu_item : library : Reboot              : power          : reboot
+menu_item : library : Shutdown            : power          : shutdown
+#
+# -----------------------------------------------------------------------------
+#
+experimental:menu_main_15505_label:Nickel
+experimental:menu_main_15505_icon:/mnt/onboard/.adds/nm/.icon.png
+##
+#menu_item : main : Toggle SSH            : cmd_output     : 500: quiet: #test -e /mnt/onboard/.kobo/ssh-disabled
+#      chain_failure  : skip              : 3
+#      chain_success  : cmd_spawn         : quiet  : mv /mnt/onboard/.kobo/ssh-disabled /mnt/onboard/.kobo/ssh-enabled
+#      chain_success  : dbg_toast         : SSH Disabled
+#      chain_always   : skip              : 2
+#      chain_failure  : cmd_spawn         : quiet  : mv /mnt/onboard/.kobo/ssh-enabled /mnt/onboard/.kobo/ssh-disabled
+#      chain_success  : dbg_toast         : SSH Enabled
+#      chain_always   :  power            : reboot

@@ -1,0 +1,85 @@
+name: "books"
+
+# ===== THIS COMPOSE FILE =====
+# Services included:
+#   - Calibre
+#   - Calibre-web-automated
+#   - Shelfmark
+
+# == ANCHORS ==
+# These anchors define baseline configuration applied to most containers.
+# Default behavior:
+#   - Include all entries under '&homelab-default' via <<: *homelab-default
+#   - Additional labels can be added per container using <<: *labels
+
+x-app: &homelab-default
+  restart: unless-stopped
+  security_opt:
+    - no-new-privileges=true
+  networks:
+    - homelab
+  labels: &labels
+    com.centurylinklabs.watchtower.enable: "true"
+
+services:
+
+#  calibre:
+    #description: book library, used mainly for auto-import and conversion
+#    <<: *homelab-default
+#    image: ghcr.io/linuxserver/calibre
+#    container_name: calibre
+#    volumes:
+#      - ${MEDIADIR}/media/books:/config
+#      - ${MEDIADIR}/media/books/uploads:/uploads
+#      - ${MEDIADIR}/media/books/plugins:/plugins
+#    ports:
+#      - 8086:8080
+#      - 8087:8081
+#      - 9090:9090
+
+  calibre-web-automated:
+    <<: *homelab-default
+    image: ghcr.io/new-usemame/calibre-web-nextgen:latest
+    container_name: calibre-web-automated
+    volumes:
+      # CW users migrating should stop their existing CW instance, make a copy of the config folder, and bind that here to carry over all of their user settings ect.
+      - ./calibre-web-automated:/config
+      # This is an ingest dir, NOT a library one. Anything added here will be automatically added to your library according to the settings you have configured in CWA Settings page. All files placed here are REMOVED AFTER PROCESSING
+      - ${MEDIADIR}/media/books/uploads:/cwa-book-ingest
+      # If you don't have an existing library, CWA will automatically create one at the bind provided here
+      - "${MEDIADIR}/media/books/Calibre Library:/calibre-library"
+      # If you use calibre plugins, you can bind your plugins folder here to have CWA attempt to add them to it's workflow (WIP)
+      - ${MEDIADIR}/media/books/plugins:/config/.config/calibre/plugins
+    ports:
+      # Change the first number to change the port you want to access the Web UI, not the second
+      - 8083:8083
+    environment:
+      PUID: "${PUID}"
+      PGID: "${PGID}"
+      TZ: "${TZ}"
+      NETWORK_SHARE_MODE: true
+      HARDCOVER_TOKEN: "${HARDCOVER_TOKEN}"
+      SMTP_HOST: smtp.gmail.com
+      SMTP_PORT: 25
+      SMTP_FROM_NAME: Calibre-web
+      SMTP_AUTH_STRATEGY: TLS
+      SMTP_FROM_EMAIL: "${SMTP_FROM_EMAIL}"
+      SMTP_USER: "${SMTP_USER}"
+      SMTP_PASSWORD: "${SMTP_PASSWORD}"
+
+  shelfmark:
+    <<: *homelab-default
+    image: ghcr.io/calibrain/shelfmark:latest
+    container_name: shelfmark
+    ports:
+      - 8084:8084
+    volumes:
+      - ${MEDIADIR}/media/books/uploads:/books # Downloaded books, Point the download volume to your CWA or Booklore ingest folder for automatic import.
+      - ./calibre-web-automated/app.db:/auth/app.db:ro # CWA's app.db, which contains authentication
+      - ./shelfmark/config:/config
+      - ${MEDIADIR}/torrents/books:/client/path # Optional: For Torrent/Usenet downloads, match your client directory exactly.
+
+networks:
+  homelab:
+    driver: bridge
+    external: true
