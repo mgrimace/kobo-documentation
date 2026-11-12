@@ -47,6 +47,7 @@ Install [KoReader](https://github.com/koreader/koreader). It's used solely for r
 
 - [NickelTypeFix](https://github.com/nicoverbruggen/NickelTypeFix) — improves native typesetting/justification
 - [NickelDissolve](https://github.com/nicoverbruggen/NickelDissolve) — animates page turns
+- [NickelSync](https://github.com/wolffshots/nickelsync) - trigger a sync from within a book, useful for quickly pulling/pushing progress
 
 ## 2. Setup the book library
 
