@@ -173,6 +173,22 @@ Install [CrossPoint](https://crosspointreader.com/install) on the EEGO A4 using 
 
 Connect the reader over USB, select the EEGO A4 in the installer, and follow the prompts to flash the firmware. Complete the initial setup and connect the reader to WiFi.
 
+
+#### Setup Pangolin
+I used the following unauthenticated paths
+
+```
+/users/auth
+/syncs/progress*
+/api/v1/progress
+/api/v1/progress/*
+/api/v1/bookmarks/*
+/api/v1/clippings/*
+/api/v1/stats/*
+```
+> [!NOTE]
+> I'm not sure if the `/api/v1/` endpoints are needed, more teesting required
+
 ### Connect the reader to CrossPoint Sync
 
 On the reader, configure CrossPoint Sync with:
