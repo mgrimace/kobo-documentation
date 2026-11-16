@@ -178,13 +178,20 @@ Connect the reader over USB, select the EEGO A4 in the installer, and follow the
 I used the following unauthenticated paths
 
 ```
-/users/auth
+/users/auth*
+/users/create*
 /syncs/progress*
-/api/v1/progress
-/api/v1/progress/*
+/api/v1/account/*
 /api/v1/bookmarks/*
 /api/v1/clippings/*
+/api/v1/connectors/*
+/api/v1/documents*
+/api/v1/profile
+/api/v1/progress
+/api/v1/progress/*
 /api/v1/stats/*
+/healthz
+
 ```
 > [!NOTE]
 > I'm not sure if the `/api/v1/` endpoints are needed, more teesting required
